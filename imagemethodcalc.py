@@ -12,6 +12,7 @@ importantInfo = {}
 warframeParts = ["Chassis", "Systems", "Neuroptics"]
 primePartsnames = []
 # pytesseract.pytesseract.tesseract_cmd = cwd + "/Tesseract-OCR-V5/tesseract.exe"
+pytesseract.tesseract_cmd = r'/usr/bin/tesseract'
 
 
 def generateDictFromMarketItems():
@@ -33,17 +34,19 @@ def getImportantinfo():
     importantInfo["itemsDucat"]["Failed"] = 0
     importantInfo["itemsOrdersaverage"]["sell"]["Forma Blueprint"] = 0
     importantInfo["itemsOrdersaverage"]["sell"]["Failed"] = 0
-    importantInfo["itemsOrderscheapest"]["sell"]["Forma Blueprint"] = ["None", 0]
+    importantInfo["itemsOrderscheapest"]["sell"]["Forma Blueprint"] = [
+        "None", 0]
     importantInfo["itemsOrderscheapest"]["sell"]["Failed"] = ["None", 0]
     importantInfo["itemsOrdersaverage"]["buy"]["Forma Blueprint"] = 0
     importantInfo["itemsOrdersaverage"]["buy"]["Failed"] = 0
-    importantInfo["itemsOrderscheapest"]["buy"]["Forma Blueprint"] = ["None", 0]
+    importantInfo["itemsOrderscheapest"]["buy"]["Forma Blueprint"] = [
+        "None", 0]
     importantInfo["itemsOrderscheapest"]["buy"]["Failed"] = ["None", 0]
     for k, tv in importantInfo["itemsNames"].items():
-        if any(x in k for x in warframeParts):
-            primePartsnames.append(k + " Blueprint")
-        else:
-            primePartsnames.append(k)
+        # if any(x in k for x in warframeParts):
+        #    primePartsnames.append(k + " Blueprint")
+        # else:
+        primePartsnames.append(k)
     generateDictFromMarketItems()
     return (importantInfo, primePartsnames)
 
@@ -71,10 +74,12 @@ def mappedWordprocessing(itemName, primePartsnames):
             round(difflib.SequenceMatcher(a=itemName, b=k).ratio(), 2) * 100
         )
         diffValuessorted = list(
-            reversed(sorted(diffValuesunsorted.items(), key=operator.itemgetter(1)))
+            reversed(sorted(diffValuesunsorted.items(),
+                     key=operator.itemgetter(1)))
         )
     if any(x in diffValuessorted[0][0] for x in warframeParts):
-        diffValuessorted[0] = (diffValuessorted[0][0].rsplit(" ", 1)[0], diffValuessorted[0][1])
+        diffValuessorted[0] = (diffValuessorted[0][0].rsplit(" ", 1)[
+                               0], diffValuessorted[0][1])
     return diffValuessorted[0]
 
 
@@ -85,7 +90,8 @@ def mappedCalc(image, primePartsnames):
     multiLine = ("Failed", 0)
     oneLine = ("Failed", 0)
     if primePart != []:
-        multiLine = mappedWordprocessing(" ".join(primePart).title(), primePartsnames)
+        multiLine = mappedWordprocessing(
+            " ".join(primePart).title(), primePartsnames)
         oneLine = mappedWordprocessing(primePart[-1].title(), primePartsnames)
         if multiLine[1] >= oneLine[1]:
             bestRead = multiLine

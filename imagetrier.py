@@ -1,6 +1,8 @@
+#!/usr/bin/env python3
 from PIL import ImageGrab, ImageOps, ImageFilter, Image
 import imagemethodcalc
 from random import random
+from pathlib import Path
 
 
 def FEdge(image):
@@ -32,11 +34,11 @@ def poolMap(image, imageName, currMethod, primePartsnames):
 def processFoo(k, where, primePartsnames):
     image = ImageGrab.grab(bbox=where)
     imageName = str(random())[2:]
-    # image.save("C:\\Users\\Sourdough\\Desktop\\pictest\\" + imageName + ".jpg")
+    image.save(Path("/home/brandon/Pictures"))
     processes = imageName + "-"
     for f in (FEdge, Inverted, Posterized):
         image = f(image)
         processes = processes + f.__name__
-    # image.save("C:\\Users\\Sourdough\\Desktop\\pictest\\" + processes + ".jpg")
+    image.save(Path("/home/brandon/Pictures"))
     itemInfo = imagemethodcalc.mappedCalc(image, primePartsnames)
     return (k, itemInfo)
