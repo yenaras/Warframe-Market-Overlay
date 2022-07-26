@@ -1,5 +1,16 @@
-# Warframe Market Overlay
+# Not Working, modified fork for linux
+ todo: 
+    -- fix text recognition issues
+    -- replace PIL with mss and opencv for faster image processing
+    -- fix Qt stylesheet values to display everything correctly
+    -- make it work in borderless fullscreen mode
+    -- make it also compatible with Windows again by re-adding win32 to requirements.txt
 
+# Important
+    In order to run this you need to use a patch for system_hotkey library.  The developer has not pulled it yet but there are breaking changes with Python 3.10.
+    You can find the diff at https://github.com/timeyyy/system_hotkey/pull/26/commits/07799cc6397a992dde353a7ad7cb9e089e7ed4de . My python packages were in .local/lib/python3.10/site-packages
+    and I just changed the file accourding to the diff
+# Warframe Market Overlay
 This is an overlay written in Python for the purpose of reading the screen in Warframe, and reporting the values from warframe.market associated with that item.
 
 This was one of my first major projects I worked on, and never completely finished to the degree I would have liked to. Now I have decided to release this on Github so that this extremely handy tool doesnt just sit in a folder on my computer collecting e-dust.
