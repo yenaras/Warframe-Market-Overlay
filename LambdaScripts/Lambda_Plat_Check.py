@@ -28,7 +28,8 @@ def updateItemplat(
 ):
     itemsOrdersingame = {"sell": {}, "buy": {}}
     itemRaw = {}
-    itemRaw = requests.get(API + "/" + itemsNames[itemName] + "/orders").json()["payload"]["orders"]
+    itemRaw = requests.get(
+        API + "/" + itemsNames[itemName] + "/orders").json()["payload"]["orders"]
     itemsOrdersingame["sell"][itemName] = {}
     itemsOrdersingame["buy"][itemName] = {}
     for i, tk in enumerate(itemRaw):
@@ -41,7 +42,7 @@ def updateItemplat(
                 itemsOrdersingame["buy"][itemName][itemRaw[i]["user"]["ingame_name"]] = itemRaw[i][
                     "platinum"
                 ]
-    #### Buy
+    # Buy
     if itemsOrdersingame["buy"][itemName] == {}:
         itemsOrdersingame["buy"][itemName] = {"No buyers": 0}
     itemsOrderstopTen["buy"][itemName] = []
@@ -55,8 +56,9 @@ def updateItemplat(
     average = 0
     for i, tk in enumerate(itemsOrderstopTen["buy"][itemName]):
         average += itemsOrderstopTen["buy"][itemName][i][1]
-        itemsOrdersaverage["buy"][itemName] = average / len(itemsOrderstopTen["buy"][itemName])
-    #### Sell
+        itemsOrdersaverage["buy"][itemName] = average / \
+            len(itemsOrderstopTen["buy"][itemName])
+    # Sell
     if itemsOrdersingame["sell"][itemName] == {}:
         itemsOrdersingame["sell"][itemName] = {"No sellers": 0}
     itemsOrderstopTen["sell"][itemName] = []
@@ -69,7 +71,8 @@ def updateItemplat(
     average = 0
     for i, tk in enumerate(itemsOrderstopTen["sell"][itemName]):
         average += itemsOrderstopTen["sell"][itemName][i][1]
-        itemsOrdersaverage["sell"][itemName] = average / len(itemsOrderstopTen["sell"][itemName])
+        itemsOrdersaverage["sell"][itemName] = average / \
+            len(itemsOrderstopTen["sell"][itemName])
     # player listings
     for k, v in itemsOrdersingame["sell"][itemName].items():
         if not k in playerListings:
@@ -87,7 +90,8 @@ def updateItemplat(
                     continue
         try:
             playerListings[k]["unorderedItems"].append(
-                {"platinum": v, "itemName": itemName, "ducats": itemsDucat[itemName]}
+                {"platinum": v, "itemName": itemName,
+                    "ducats": itemsDucat[itemName]}
             )
         except KeyError:
             playerListings[k]["unorderedItems"].append(
@@ -149,7 +153,8 @@ def bestDucatplatEfficencycalc(itemsNames, itemsDucat, itemsOrderscheapest):
         add = ducatPlatefficency(k, itemsDucat, itemsOrderscheapest)
         if add != "No ducat value listed on Warframe.Market, please notify Warframe.Market":
             ducatPlatledgerUnsorted[k] = add
-    ducatPlatledgerSorted = sorted(ducatPlatledgerUnsorted.items(), key=operator.itemgetter(1))
+    ducatPlatledgerSorted = sorted(
+        ducatPlatledgerUnsorted.items(), key=operator.itemgetter(1))
     ducatPlatledgerUnsorted = {}
     return ducatPlatledgerSorted
 
@@ -185,7 +190,8 @@ def playerListingsaccumulator(playerListings):
                 v2["efficency"] = v2["ducats"] / v2["platinum"]
             except ZeroDivisionError:
                 v2["efficency"] = 0
-        playerSalessorted = sorted(v["unorderedItems"], key=operator.itemgetter("efficency"))
+        playerSalessorted = sorted(
+            v["unorderedItems"], key=operator.itemgetter("efficency"))
         playerSalessorted.reverse()
         for v2 in playerSalessorted:
             for v3 in v["unorderedItems"]:
@@ -214,15 +220,20 @@ def playerListingsaccumulator(playerListings):
 
 
 def lambda_handler(event, context):
-    print("Started plat and efficency checks", datetime.datetime.isoformat(datetime.datetime.now()))
+    print("Started plat and efficency checks",
+          datetime.datetime.isoformat(datetime.datetime.now()))
     itemsNames, itemsDucat = importNamesandDucats()
-    print("Finished name and ducat import", datetime.datetime.isoformat(datetime.datetime.now()))
+    print("Finished name and ducat import",
+          datetime.datetime.isoformat(datetime.datetime.now()))
     itemsOrderstopTen, itemsOrderscheapest, itemsOrdersaverage, playerListings = platCheck(
         itemsNames, itemsDucat
     )
-    print("Finished plat check", datetime.datetime.isoformat(datetime.datetime.now()))
-    ducatPlatledgerSorted = bestDucatplatEfficencycalc(itemsNames, itemsDucat, itemsOrderscheapest)
-    print("Finished efficency check", datetime.datetime.isoformat(datetime.datetime.now()))
+    print("Finished plat check", datetime.datetime.isoformat(
+        datetime.datetime.now()))
+    ducatPlatledgerSorted = bestDucatplatEfficencycalc(
+        itemsNames, itemsDucat, itemsOrderscheapest)
+    print("Finished efficency check",
+          datetime.datetime.isoformat(datetime.datetime.now()))
     toClient = {
         "last Updated": str(datetime.datetime.isoformat(datetime.datetime.now())),
         "itemsNames": itemsNames,
@@ -242,7 +253,8 @@ def lambda_handler(event, context):
     client.put_object(
         Bucket="www.jsourdough.com",
         Key="bestDucatplatEfficency.txt",
-        Body=bestDucatplatEfficencytxt(20, itemsDucat, itemsOrderscheapest, ducatPlatledgerSorted),
+        Body=bestDucatplatEfficencytxt(
+            20, itemsDucat, itemsOrderscheapest, ducatPlatledgerSorted),
         ContentType="text/plain",
     )
     client.put_object(

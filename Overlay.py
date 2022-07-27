@@ -155,16 +155,16 @@ def mediaLoadLoop(names, imageType):  # loading all the media in the lists
     for v in names:  # for all the load names
         if imageType == "QImage":
             # load as Image
-            Media[v] = QImage(Path('"./" + r"/media/" + v + ".png"'))
+            Media[v] = QImage(Path("./media/" + v + ".png"))
         if imageType == "QPixmap":
             # Load as Pixmap
-            Media[v] = QPixmap(Path('"./" + r"/media/" + v + ".png"'))
+            Media[v] = QPixmap(Path(".//media/" + v + ".png"))
 
 
 class dropConstructorclass(QWidget):  # drop menu constructor
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.setStyleSheet("QPushButton {background-color: green;}")
+        self.setStyleSheet("QPushButton {background-color: transparent;}")
         self.parent = parent
         self.dropButtondict = {}
         self.dropListouterLayout = QHBoxLayout()
@@ -682,7 +682,7 @@ class infoWindow(instanceWindow):
 
     def __init__(self, **kwargs):
         super().__init__(windowDesignation=kwargs["windowDesignation"])
-        self.setStyleSheet("QLabel{color: green;}")
+        self.setStyleSheet("QLabel{color: white;}")
         self.pressed = False
         self.itemPressed = []
         self.DoubleClick = False
@@ -871,7 +871,7 @@ class settingWindow(instanceWindow):
             + str(16 * scaleFactor())
             + "px; height: "
             + str(16 * scaleFactor())
-            + "px;} QLabel{color: green;}"
+            + "px;} QLabel{color: white;}"
         )
         self.pressed = False
         self.itemPressed = []
@@ -958,11 +958,11 @@ class globalSettingwindow(instanceWindow):
         self.setStyleSheet(
             "QListView::item {height: "
             + str(16 * scaleFactor())
-            + ";} QComboBox:editable {background-color: black; color: green; border-style: outset; border-width: "
+            + ";} QComboBox:editable {background-color: transparent; color: white; border-style: outset; border-width: "
             + str(1 * scaleFactor())
             + "px; border-radius: "
             + str(3 * scaleFactor())
-            + "px; border-color: green;} QRadioButton::indicator::unchecked {width: "
+            + "px; border-color: white;} QRadioButton::indicator::unchecked {width: "
             + str(16 * scaleFactor())
             + "px; height: "
             + str(16 * scaleFactor())
@@ -970,7 +970,7 @@ class globalSettingwindow(instanceWindow):
             + str(16 * scaleFactor())
             + "px; height: "
             + str(16 * scaleFactor())
-            + "px;} QLabel{color: white;} QPushButton {background-color: green;}"
+            + "px;} QLabel{color: white;} QPushButton {background-color: transparent;}"
         )
         self.pressed = False
         self.itemPressed = []
@@ -1255,7 +1255,7 @@ class globalSettingwindow(instanceWindow):
             + str(16 * scaleFactor())
             + ";} QComboBox:editable {height: "
             + str(16 * scaleFactor())
-            + "; color: white; background-color: green; border-style: outset; border-width: "
+            + "; color: white; background-color: transparent; border-style: outset; border-width: "
             + str(1 * scaleFactor())
             + "px; border-radius: "
             + str(3 * scaleFactor())
@@ -1267,7 +1267,7 @@ class globalSettingwindow(instanceWindow):
             + str(16 * scaleFactor())
             + "px; height: "
             + str(16 * scaleFactor())
-            + "px;} QLabel{color: white;} QPushButton {background-color: green;}"
+            + "px;} QLabel{color: white;} QPushButton {background-color: transparent;}"
         )
         self.layoutsRspacer.changeSize(5 * scaleFactor(), 5 * scaleFactor())
         for tk, v in self.savedLayoutsactions.items():
@@ -1347,7 +1347,7 @@ class globalSettingwindow(instanceWindow):
                     + str(16 * scaleFactor())
                     + "px; height: "
                     + str(16 * scaleFactor())
-                    + "px;} QLabel{color: white;} QPushButton {background-color: green;}"
+                    + "px;} QLabel{color: white;} QPushButton {background-color: transparent;}"
                 )
             QTimer.singleShot(0, lambda v=v: self.scaleResizer(v))
         for k in self.infoWindowdict:

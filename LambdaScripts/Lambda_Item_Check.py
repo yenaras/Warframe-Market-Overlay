@@ -11,7 +11,7 @@ def itemCheck():
     setsIds = {}
     itemsRaw = requests.get(API + "items").json()["payload"]["items"]
     for v in itemsRaw:
-        if (" Prime " in v["item_name"]) and (not " Set" in v["item_name"]):
+        if (" Prime " in v["item_name"]) and (" Set" not in v["item_name"]):
             itemsNames[v["item_name"]] = v["url_name"]
             itemsIds[v["id"]] = v["item_name"]
         elif (" Prime " in v["item_name"]) and (" Set" in v["item_name"]):
@@ -21,7 +21,8 @@ def itemCheck():
 
 def ducatCheck(itemsIds, setsIds):
     itemsDucat = {}
-    ducatsRaw = requests.get(API + "tools/ducats").json()["payload"]["previous_hour"]
+    ducatsRaw = requests.get(
+        API + "tools/ducats").json()["payload"]["previous_hour"]
     for i, v in enumerate(ducatsRaw):
         if not any(x in v["item"] for x in setsIds):
             itemsDucat[itemsIds[v["item"]]] = v["ducats"]
