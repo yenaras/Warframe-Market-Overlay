@@ -2,7 +2,6 @@
  todo: 
     -- fix text recognition issues
     -- replace PIL with mss and opencv for faster image processing
-    -- fix Qt stylesheet values to display everything correctly
     -- make it work in borderless fullscreen mode
     -- make it also compatible with Windows again by re-adding win32 to requirements.txt
 
